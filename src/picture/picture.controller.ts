@@ -8,21 +8,19 @@ import {
   UseInterceptors,
   UploadedFile,
   Param,
+  Res,
 } from '@nestjs/common';
 import { PictureService } from './picture.service';
-import { Request } from 'express';
+import { Request, Express } from 'express';
 import { JwtService } from '@nestjs/jwt';
-
-import { Express } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
-import {} from 'fs';
-import { ObjectId, Types } from 'mongoose';
+import { Types } from 'mongoose';
 
 @Controller('picture')
 export class PictureController {
   constructor(
     private pictureService: PictureService,
-    private jwtService: JwtService,
+    private jwtService: JwtService
   ) {}
 
   private async checkToken(authorization: string): Promise<string> {
@@ -56,11 +54,22 @@ export class PictureController {
       message: 'That picture is not valid',
     },
   };
+
+
   @Get()
   async getPictures(@Req() req: Request) {
     const owner = await this.checkToken(req.headers.authorization);
     if (!owner) return this.errorResponses.invalidToken;
     return await this.pictureService.getPictures({ owner });
+  }
+
+  @Get(':id')
+  async downloadPicture(@Param('id') id:string, @Req() req:Request){
+    const owner = await this.checkToken(req.headers.authorization);
+    if (!owner) return this.errorResponses.invalidToken;
+    if (!Types.ObjectId.isValid(id)) return this.errorResponses.invalidId;
+    const picture = await this.pictureService.downloadPicture(id)
+    return picture
   }
 
   @Post()

@@ -20,13 +20,11 @@ export class UserController {
 
     @Post('create')
     createUser(@Body() createUserDto:CreateUserDto):Promise<User | {}>{
-        console.log({createUserDto})
         return this.userService.createUser(createUserDto)
     }
 
     @Post()
     loginUser(@Body() createUserDto:CreateUserDto):Promise<User | {}>{
-        console.log({createUserDto})
         return this.userService.loginUser(createUserDto)
     }
 

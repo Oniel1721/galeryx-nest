@@ -11,6 +11,10 @@ export class PictureService {
     return await this.pictureModel.find(query);
   }
 
+  async downloadPicture(_id: ObjectId|string): Promise<Picture>{
+    return this.pictureModel.findOne({_id})
+  }
+
   async uploadPicture(picture: Picture) {
     let newPicture = new this.pictureModel(picture);
     let pictureSaved = await newPicture.save();

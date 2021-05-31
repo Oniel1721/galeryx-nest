@@ -8,7 +8,7 @@ import { PictureSchema } from './schemas/picture.schema';
 @Module({
   imports: [
     MongooseModule.forFeature([{name:"Picture", schema: PictureSchema}]),
-    JwtModule.register({})
+    JwtModule.register({}),
   ],
   controllers: [PictureController],
   providers: [PictureService]
