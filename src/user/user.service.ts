@@ -90,7 +90,7 @@ export class UserService{
         const payload = {username: userSaved.username, _id: userSaved._id}
         const secretToken = this.jwtService.sign(payload, {secret: "una vaina"})
         
-        return {secretToken}
+        return {secretToken, username: newUser.username}
     }
 
     async loginUser(userInfo: CreateUserDto){
@@ -110,7 +110,7 @@ export class UserService{
         const payload = {username: user.username, _id: user._id}
         const secretToken = this.jwtService.sign(payload, {secret: "una vaina"})
         
-        return {secretToken}
+        return {secretToken, username: userInfo.username}
     }
 
     async deleteUser(username: string, password: string){

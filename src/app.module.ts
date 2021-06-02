@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import {MongooseModule} from '@nestjs/mongoose'
 import { PictureModule } from './picture/picture.module';
+import { EventGateway } from './socket/events.gateway';
 
 @Module({
   imports: [
@@ -12,6 +13,6 @@ import { PictureModule } from './picture/picture.module';
     PictureModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, EventGateway],
 })
 export class AppModule {}
